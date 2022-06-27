@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Pengurus;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class PengurusController extends Controller
@@ -25,8 +26,14 @@ class PengurusController extends Controller
         //fungsi eloquent menampilkan data menggunakan pagination
         $pengurus = $search->paginate(3);//Mengambil semia isi tabel
         $posts = Pengurus::orderBy('id_pengurus','desc')->paginate(6);
+        $user = Auth::user();
+        if($user->name == 'user'){
+            return view('user.pengurus',compact('pengurus'))
+            ->with('i',(request()->input('page',1)-1)*5);
+        }
         return view('Pengurus.index',compact('pengurus'))
         ->with('i',(request()->input('page',1)-1)*5);
+        
     }
 
     /**

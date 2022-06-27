@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\models\Anggota;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class AnggotaController extends Controller
@@ -26,6 +27,11 @@ class AnggotaController extends Controller
         //fungsi eloquent menampilkan data menggunakan pagination
         $anggota = $search->paginate(3);//Mengambil semia isi tabel
         $posts = Anggota::orderBy('id_anggota','desc')->paginate(6);
+        $user = Auth::user();
+        if($user->name == 'user'){
+            return view('user.anggota',compact('anggota'))
+            ->with('i',(request()->input('page',1)-1)*5);
+        }
         return view('Anggota.index',compact('anggota'))
         ->with('i',(request()->input('page',1)-1)*5);
     }
