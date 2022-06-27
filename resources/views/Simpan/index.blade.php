@@ -37,7 +37,7 @@
     </tr>
     @foreach($post as $simpan)
     <tr>
-        <td>{{ $simpan->id }}</td>
+        <td>{{ $simpan->id_simpanan }}</td>
         <td>{{ $simpan->anggota->nama }}</td>
         <td>{{ $simpan->tanggal }}</td>
         <td>{{ $simpan->jumlah }}</td>
